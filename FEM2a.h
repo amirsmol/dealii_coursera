@@ -199,15 +199,14 @@ void FEM<dim>::define_boundary_conds(){
   const unsigned int totalNodes = dof_handler.n_dofs(); //Total number of nodes
 
   for(unsigned int globalNode=0; globalNode<totalNodes; globalNode++){
-    if(nodeLocation[globalNode][0] == y_min){
-      double x_value=nodeLocation[globalNode][1];
+    if(nodeLocation[globalNode][1] == y_min){
+      double x_value=nodeLocation[globalNode][0];
 
       boundary_values[globalNode]= 300*(1+c0*x_value);
     }
-    if(nodeLocation[globalNode][0] == y_max){
-      double x_value=nodeLocation[globalNode][1];
-
-      boundary_values[globalNode]= 310*(1+c0_hat*x_value);
+    if(nodeLocation[globalNode][1] == y_max){
+      double x_value=nodeLocation[globalNode][0];
+      boundary_values[globalNode]= 310*(1+c0_hat*x_value*x_value);
     }
   }
 
