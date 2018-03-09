@@ -122,10 +122,10 @@ double FEM<dim>::basis_function(unsigned int node, double xi_1, double xi_2){
 
     switch(node) {
 
-    case 0 : value=0.25*(1-xi_1)*(1-xi_2);
-    case 1 : value=0.25*(1+xi_1)*(1-xi_2);
-    case 2 : value=0.25*(1-xi_1)*(1+xi_2);
-    case 3 : value=0.25*(1+xi_1)*(1+xi_2);
+    case 0 : value=0.25*(1-xi_1)*(1-xi_2);break;
+    case 1 : value=0.25*(1+xi_1)*(1-xi_2);break;
+    case 2 : value=0.25*(1-xi_1)*(1+xi_2);break;
+    case 3 : value=0.25*(1+xi_1)*(1+xi_2);break;
 
     }
 
@@ -143,17 +143,17 @@ std::vector<double> FEM<dim>::basis_gradient(unsigned int node, double xi_1, dou
   std::vector<double> values(dim,0.0); //Store the value of the gradient of the basis function in this variable
 
     switch(node) {
-    case 0 : values[0]=0.25*(-1)*(1-xi_2);
-             values[1]=0.25*(1-xi_1)*(-1);
+    case 0 : values[0]=0.25*(-1)*(1-xi_2);  
+             values[1]=0.25*(1-xi_1)*(-1);  break;
 
-    case 1 : values[0]=0.25*(1)*(1-xi_2);
-             values[1]=0.25*(1+xi_1)*(-1);
+    case 1 : values[0]=0.25*(1)*(1-xi_2);   
+             values[1]=0.25*(1+xi_1)*(-1);   break;
 
-    case 2 : values[0]=0.25*(-1)*(1+xi_2);
-             values[1]=0.25*(1-xi_1)*(+1);
+    case 2 : values[0]=0.25*(-1)*(1+xi_2);  
+             values[1]=0.25*(1-xi_1)*(+1);  break;
 
-    case 3 : values[0]=0.25*(1)*(1+xi_2);
-             values[1]=0.25*(1+xi_1)*(1);
+    case 3 : values[0]=0.25*(1)*(1+xi_2); 
+             values[1]=0.25*(1+xi_1)*(1); break;
                 }
 
   //EDIT
@@ -339,16 +339,18 @@ void FEM<dim>::assemble_system(){
 
 	detJ = Jacobian.determinant();
  
-  std::cout<< "Jacobian=============="<<std::endl;
-   Jacobian.print(std::cout) ;
-  std::cout<< "=============="<<std::endl;
 
 
 	invJacob.invert(Jacobian);
 
-  std::cout<< "inverse Jacobian=============="<<std::endl;
-  invJacob.print(std::cout) ;
-  std::cout<< "=============="<<std::endl;
+  // std::cout<< "Jacobian=============="<<std::endl;
+  //  Jacobian.print(std::cout) ;
+  // std::cout<< "=============="<<std::endl;
+
+
+  // std::cout<< "inverse Jacobian=============="<<std::endl;
+  // invJacob.print(std::cout) ;
+  // std::cout<< "=============="<<std::endl;
 
     // Jacobian.print(std::cout) ; 
   // std::cout<< Jacobian <<std::endl;
@@ -378,9 +380,10 @@ void FEM<dim>::assemble_system(){
 	}
       }
     }
+    
+    // std::cout<< "Klocal" <<std::endl; 
     // Klocal.print(std::cout) ;	
-
-    Klocal=0.0;
+    // Klocal=0.0;
 
     //Assemble local K and F into global K and F
     for(unsigned int A=0; A<dofs_per_elem; A++){
